@@ -12,7 +12,13 @@ const ItemSchema = new Schema({
     },
     required: true,
   },
-  categories: [{ type: Schema.Types.ObjectId, ref: "Category" }],
+  categories: {
+    type: [{ type: Schema.Types.ObjectId, ref: "Category" }],
+    validate: [
+      (categories) => categories.length <= 5,
+      "Categories cannot exceed 5",
+    ],
+  },
   numberInStock: { type: Number, required: true },
 });
 
