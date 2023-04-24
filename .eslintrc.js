@@ -11,5 +11,6 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "no-unused-vars": ["error", { argsIgnorePattern: "^(err|req|res|next)$" }],
+    "no-underscore-dangle": ["error", { allow: ["_id"] }],
   },
 };
