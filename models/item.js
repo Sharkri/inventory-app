@@ -18,6 +18,7 @@ const ItemSchema = new Schema({
       (categories) => categories.length <= 5,
       "Categories cannot exceed 5",
     ],
+    default: [],
   },
   numberInStock: { type: Number, required: true },
 });
