@@ -13,4 +13,6 @@ module.exports = {
     "no-unused-vars": ["error", { argsIgnorePattern: "^(err|req|res|next)$" }],
     "no-underscore-dangle": ["error", { allow: ["_id"] }],
   },
+
+  ignorePatterns: ["node_modules*/"],
 };
