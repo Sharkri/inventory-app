@@ -6,5 +6,14 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= title
     link(rel="stylesheet", href="/stylesheets/output.css")
-  body
-    block content
+  body.bg-neutral-50
+    header.sticky.top-0.px-4.py-3.flex.justify-between.gap-3.shadow-sm.font-bold
+      a(href="/") Home
+
+      nav.flex.gap-3
+        a(href="/inventory") Inventory
+        a(href="/inventory/item/create") Create item
+        a(href="/inventory/category/create") Create Category
+
+    .px-4.py-2
+      block content
