@@ -7,7 +7,7 @@ html(lang="en")
     title= title
     link(rel="stylesheet", href="/stylesheets/output.css")
   body.bg-neutral-50
-    header.sticky.top-0.px-4.py-3.flex.justify-between.gap-3.shadow-sm.font-bold
+    header.sticky.top-0.px-4.py-3.flex.justify-between.gap-3.shadow-sm.font-bold.bg-neutral-50.border-b.border-b-slate-200
       a(href="/") Home
 
       nav.flex.gap-3
@@ -15,5 +15,5 @@ html(lang="en")
         a(href="/inventory/item/create") Create item
         a(href="/inventory/category/create") Create Category
 
-    .px-4.py-2
+    .p-4
       block content
