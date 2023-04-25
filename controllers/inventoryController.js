@@ -1,7 +1,14 @@
 const asyncHandler = require("express-async-handler");
+const Category = require("../models/Category");
+const Item = require("../models/Item");
 
 exports.indexPage = asyncHandler(async (req, res, next) => {
-  res.render("index", { title: "Inventory App" });
+  const [itemCount, categoryCount] = await Promise.all([
+    Item.countDocuments({}).exec(),
+    Category.countDocuments({}).exec(),
+  ]);
+
+  res.render("index", { title: "Inventory App", itemCount, categoryCount });
 });
 
 exports.inventoryPage = asyncHandler(async (req, res, next) => {

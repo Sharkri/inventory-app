@@ -3,8 +3,8 @@
 require("dotenv").config();
 
 const mongoose = require("mongoose");
-const Item = require("./models/item");
-const Category = require("./models/category");
+const Item = require("./models/Item");
+const Category = require("./models/Category");
 
 const items = [];
 const categories = [];
