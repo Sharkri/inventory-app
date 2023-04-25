@@ -10,12 +10,14 @@
     "watch:css": "npm run build:css -- --watch"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "autoprefixer": "^10.4.14",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
     "express": "~4.16.1",
     "express-async-handler": "^1.2.0",
+    "express-validator": "^7.0.1",
     "http-errors": "~1.6.3",
     "mongoose": "^7.0.4",
     "morgan": "~1.9.1",

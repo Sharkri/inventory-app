@@ -1,3 +1,5 @@
+const formsPlugin = require("@tailwindcss/forms");
+
 module.exports = {
   content: ["./views/**/*.pug"],
   theme: {
@@ -8,5 +10,6 @@ module.exports = {
       tailwindcss: {},
       autoprefixer: {},
     },
+    formsPlugin,
   ],
 };
