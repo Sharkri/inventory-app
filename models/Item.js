@@ -24,7 +24,11 @@ const ItemSchema = new Schema({
 });
 
 ItemSchema.virtual("url").get(function getItemURL() {
-  return `/inventory/${this._id}`;
+  return `/inventory/item/${this._id}`;
+});
+
+ItemSchema.virtual("priceString").get(function getPriceString() {
+  return this.price.symbol + this.price.amount;
 });
 
 module.exports = mongoose.model("Item", ItemSchema);

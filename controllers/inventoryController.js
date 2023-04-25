@@ -17,7 +17,7 @@ exports.indexPage = asyncHandler(async (req, res, next) => {
 
 exports.inventoryPage = asyncHandler(async (req, res, next) => {
   const [items, categories] = await Promise.all([
-    Item.find().exec(),
+    Item.find().populate("categories").exec(),
     Category.find().exec(),
   ]);
 

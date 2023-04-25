@@ -1,12 +1,26 @@
 extends layout
 
 block content
-  h1= title
+  h1.text-lg.font-bold.mb-4= title
 
-  each item in items
-    p= item.name
+  .flex.gap-4.flex-col
+    each item in items
+      .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-2
+        a.font-bold(href=item.url)= item.name
+        p.text-gray-400.text-sm= item.description
+        p.text-green-500.font-bold= item.priceString
 
-  h1.text-lg.font-bold Categories
+        if item.categories.length
+          div
+            each category, index in item.categories 
+              span.text-sm #{ category.name }
+              if index < item.categories.length - 1
+                = ", "
 
-  each category in categories
-    p= category.name
+  h1.text-lg.font-bold.my-4 Categories
+
+  each category, index in categories
+    a(href=category.url)= category.name
+
+    if index < categories.length - 1
+      = ", "
