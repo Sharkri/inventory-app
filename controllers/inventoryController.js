@@ -8,11 +8,20 @@ exports.indexPage = asyncHandler(async (req, res, next) => {
     Category.countDocuments({}).exec(),
   ]);
 
-  res.render("index", { title: "Inventory App", itemCount, categoryCount });
+  res.render("index", {
+    title: "Inventory Homepage",
+    itemCount,
+    categoryCount,
+  });
 });
 
 exports.inventoryPage = asyncHandler(async (req, res, next) => {
-  res.send("TODO: Implement inventory page");
+  const [items, categories] = await Promise.all([
+    Item.find().exec(),
+    Category.find().exec(),
+  ]);
+
+  res.render("inventory", { title: "Inventory", items, categories });
 });
 
 exports.itemPage = asyncHandler(async (req, res, next) => {

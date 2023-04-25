@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+
+  each item in items
+    p= item.name
+
+  h1.text-lg.font-bold Categories
+
+  each category in categories
+    p= category.name
