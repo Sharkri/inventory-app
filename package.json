@@ -5,9 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
+    "serverstart": "concurrently \"DEBUG=inventory-app:* npm run devstart\" \"npm run watch:css\"",
     "build:css": "npx tailwindcss -i ./public/stylesheets/tailwind.css -o ./public/stylesheets/output.css",
-    "watch:css": "npm run build:css -- --watch",
-    "serverstart": "concurrently \"DEBUG=inventory-app:* npm run devstart\" \"npm run watch:css\""
+    "watch:css": "npm run build:css -- --watch"
   },
   "dependencies": {
     "autoprefixer": "^10.4.14",
