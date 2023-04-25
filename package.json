@@ -5,9 +5,12 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=inventory-app:* npm run devstart"
+    "build:css": "npx tailwindcss -i ./public/stylesheets/tailwind.css -o ./public/stylesheets/output.css",
+    "watch:css": "npm run build:css -- --watch",
+    "serverstart": "concurrently \"DEBUG=inventory-app:* npm run devstart\" \"npm run watch:css\""
   },
   "dependencies": {
+    "autoprefixer": "^10.4.14",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
@@ -16,15 +19,19 @@
     "http-errors": "~1.6.3",
     "mongoose": "^7.0.4",
     "morgan": "~1.9.1",
+    "postcss": "^8.4.23",
+    "postcss-cli": "^10.1.0",
     "pug": "2.0.0-beta11"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^2.4.2",
+    "concurrently": "^8.0.1",
     "eslint": "^8.38.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.7"
+    "prettier": "^2.8.7",
+    "tailwindcss": "^3.3.1"
   }
 }
