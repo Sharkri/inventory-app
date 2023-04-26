@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const Category = require("../models/Category");
 const Item = require("../models/Item");
+const convertToArray = require("../helpers/convertToArray");
 
 exports.indexPage = asyncHandler(async (req, res, next) => {
   const [itemCount, categoryCount] = await Promise.all([
@@ -17,12 +18,37 @@ exports.indexPage = asyncHandler(async (req, res, next) => {
 });
 
 exports.inventoryPage = asyncHandler(async (req, res, next) => {
-  const [items, categories] = await Promise.all([
-    Item.find().populate("categories").exec(),
+  const selectedCategories = convertToArray(req.query.category);
+
+  const itemQuery = {};
+
+  // if selected categories exists, search for all items with selected categories
+  if (selectedCategories.length) {
+    itemQuery.categories = { $all: selectedCategories };
+  }
+
+  const [items, allCategories] = await Promise.all([
+    Item.find(itemQuery).populate("categories").exec(),
     Category.find().exec(),
   ]);
 
-  res.render("inventory", { title: "Inventory", items, categories });
+  res.render("inventory", {
+    title: "Inventory",
+    items,
+    // check all categories selected
+    categories: selectedCategories.length
+      ? allCategories.map((category) => {
+          // if category is selected, set checked to true
+          if (selectedCategories.includes(category._id.toString())) {
+            return Object.assign(category, { checked: true });
+          }
+
+          return category;
+        })
+      : allCategories,
+
+    hasFilterApplied: !!selectedCategories.length,
+  });
 });
 
 exports.itemPage = asyncHandler(async (req, res, next) => {
@@ -37,21 +63,6 @@ exports.addItemFormGET = asyncHandler(async (req, res, next) => {
     categories: allCategories,
   });
 });
-
-function convertToArray(value) {
-  // if is undefined
-  if (value === undefined) {
-    return [];
-  }
-
-  // if is not an array
-  if (!Array.isArray(value)) {
-    return [value];
-  }
-
-  // else it is an array, no need to convert
-  return value;
-}
 
 async function checkIfCategoriesExists(categories) {
   const categoryCount = await Category.countDocuments({
@@ -83,7 +94,9 @@ exports.addItemFormPOST = [
     .custom(checkIfCategoriesExists)
     .withMessage(
       "One or more categories do not exist. Please create them first."
-    ),
+    )
+    .custom((array) => array.length <= 5)
+    .withMessage("You can only have 5 categories max."),
 
   body("price").isFloat({ min: 0 }).withMessage("Please enter a valid price."),
   body("numberInStock")

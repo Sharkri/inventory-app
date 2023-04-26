@@ -1,26 +1,43 @@
 extends layout
 
 block content
-  h1.text-lg.font-bold.mb-4= title
+  .flex.gap-6.mt-6.flex-wrap
+    form.flex.flex-col(method="get", action="")
+      h1.text-lg.font-bold.mb-4 Categories
 
-  .grid.gap-5(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
-    each item in items
-      .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-2
-        a.font-bold(href=item.url)= item.name
-        p.text-gray-400.text-sm= item.description
-        p.text-green-500.font-bold= item.priceString
+      each category in categories
+        label.mb-2.flex.items-center
+          input.rounded.border-gray-300.text-indigo-600.shadow-sm(
+            type="checkbox",
+            name="category",
+            checked=category.checked,
+            value=category._id,
+            class="focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+          )
+          strong.text-sm.ml-2= category.name
 
-        if item.categories.length
-          div
-            each category, index in item.categories 
-              span.text-sm #{ category.name }
-              if index < item.categories.length - 1
-                = ", "
+      a.text-sm.text-center.text-gray-400(
+        class=hasFilterApplied ? "" : "invisible",
+        href="/inventory"
+      ) Reset all filters
 
-  h1.text-lg.font-bold.my-4 Categories
+      button.bg-green-600.font-bold.rounded-md.text-sm.p-1.mt-2(
+        type="submit",
+        class="text-white/90"
+      ) Go
+    if items.length
+      .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
+        each item in items
+          .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-2
+            a.font-bold(href=item.url)= item.name
+            p.text-gray-400.text-sm= item.description
+            p.text-green-500.font-bold= item.priceString
 
-  each category, index in categories
-    a(href=category.url)= category.name
-
-    if index < categories.length - 1
-      = ", "
+            if item.categories.length
+              div
+                each category, index in item.categories 
+                  span.text-sm #{ category.name }
+                  if index < item.categories.length - 1
+                    = ", "
+    else
+      p.grow.text-gray-500.grid.place-items-center No items found. #{ hasFilterApplied ? "Try clearing the filters." : "" }
