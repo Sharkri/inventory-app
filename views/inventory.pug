@@ -3,7 +3,7 @@ extends layout
 block content
   h1.text-lg.font-bold.mb-4= title
 
-  .flex.gap-4.flex-col
+  .grid.gap-5(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
     each item in items
       .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-2
         a.font-bold(href=item.url)= item.name

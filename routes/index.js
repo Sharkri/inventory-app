@@ -17,7 +17,7 @@ router.get("/inventory", inventoryPage);
 router.get("/inventory/item/create", addItemFormGET);
 router.post("/inventory/item/create", addItemFormPOST);
 
-router.get("inventory/category/create", addCategoryForm);
+router.get("/inventory/category/create", addCategoryForm);
 
 router.get("/inventory/item/:id", itemPage);
 router.get("/inventory/item/:id/update", updateItemForm);
