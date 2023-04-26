@@ -4,9 +4,10 @@ const {
   itemPage,
   indexPage,
   updateItemForm,
-  addCategoryForm,
   addItemFormGET,
   addItemFormPOST,
+  addCategoryFormGET,
+  addCategoryFormPOST,
 } = require("../controllers/inventoryController");
 
 const router = express.Router();
@@ -17,7 +18,8 @@ router.get("/inventory", inventoryPage);
 router.get("/inventory/item/create", addItemFormGET);
 router.post("/inventory/item/create", addItemFormPOST);
 
-router.get("/inventory/category/create", addCategoryForm);
+router.get("/inventory/category/create", addCategoryFormGET);
+router.post("/inventory/category/create", addCategoryFormPOST);
 
 router.get("/inventory/item/:id", itemPage);
 router.get("/inventory/item/:id/update", updateItemForm);

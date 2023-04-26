@@ -133,9 +133,38 @@ exports.updateItemForm = asyncHandler(async (req, res, next) => {
   res.send("TODO: Implement update item page");
 });
 
-exports.addCategoryForm = asyncHandler(async (req, res, next) => {
-  res.send("TODO: Implement add category page");
+exports.addCategoryFormGET = asyncHandler(async (req, res, next) => {
+  res.render("create-category", { title: "Create Category" });
 });
+
+exports.addCategoryFormPOST = [
+  body("name")
+    .trim()
+    .isString()
+    .isLength({ min: 1 })
+    .withMessage("Category name must be specified."),
+  body("description").isString(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("create-category", {
+        name: req.body.name,
+        description: req.body.description,
+        errors: errors.array(),
+      });
+    } else {
+      const category = new Category({
+        name: req.body.name,
+        description: req.body.description,
+      });
+
+      await category.save();
+      res.redirect(category.url);
+    }
+  }),
+];
 
 exports.updateCategoryForm = asyncHandler(async (req, res, next) => {
   res.send("TODO: Implement update category page");

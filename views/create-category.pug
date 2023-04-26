@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1.text-2xl.font-bold.mb-7= title
+
+  form.flex.flex-col.gap-6.max-w-sm(action="", method="post")
+    label.flex.flex-col.gap-2
+      strong Category Name
+      input.border-gray-400.shadow-sm.border-gray-300.rounded-md(
+        type="text",
+        name="name",
+        class="focus:ring-opacity-50 focus:ring-sky-200",
+        value=name,
+        required
+      )
+
+    label.flex.flex-col.gap-2
+      strong Description #[span.text-gray-400.text-sm.font-normal (optional)]
+      textarea.border-gray-400.shadow-sm.border-gray-300.rounded-md(
+        name="description",
+        value=description,
+        placeholder="Enter a description...",
+        class="focus:ring-opacity-50 focus:ring-sky-200"
+      )
+
+    if errors
+      each error in errors
+        p.text-red-500.text-sm= error.msg
+
+    button.p-2.bg-blue-500.font-bold.rounded-md(class="text-white/90", type="submit") Create Category
