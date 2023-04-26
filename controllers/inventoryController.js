@@ -167,15 +167,29 @@ exports.addCategoryFormPOST = [
         description: req.body.description,
         errors: errors.array(),
       });
-    } else {
-      const category = new Category({
-        name: req.body.name,
-        description: req.body.description,
-      });
-
-      await category.save();
-      res.redirect(category.url);
+      return;
     }
+
+    const categoryExists = await Category.findOne(
+      { name: req.body.name },
+      "_id"
+    )
+      .collation({ locale: "en", strength: 2 })
+      .exec();
+
+    // if category already exists
+    if (categoryExists) {
+      res.redirect(categoryExists.url);
+      return;
+    }
+
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+    });
+
+    await category.save();
+    res.redirect(category.url);
   }),
 ];
 
