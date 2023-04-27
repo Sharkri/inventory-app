@@ -25,19 +25,21 @@ block content
         type="submit",
         class="text-white/90"
       ) Go
+
     if items.length
       .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
         each item in items
-          .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-2
-            a.font-bold(href=item.url)= item.name
-            p.text-gray-400.text-sm= item.description
-            p.text-green-500.font-bold= item.priceString
+          .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-2.justify-between
+            a.block(href=item.url)
+              p.font-bold.text-lg.truncate(href=item.url)= item.name
+              p.text-gray-400.text-sm.mt-2.mb-2.truncate= item.description
+              p.text-green-500.font-bold= item.priceString
 
-            if item.categories.length
-              div
-                each category, index in item.categories 
-                  span.text-sm #{ category.name }
-                  if index < item.categories.length - 1
-                    = ", "
+            p.text-gray-400.text-sm Inventory: #{ item.numberInStock }
+            div
+              each category, index in item.categories 
+                span.text-sm #{ category.name }
+                if index < item.categories.length - 1
+                  = ", "
     else
       p.grow.text-gray-500.grid.place-items-center No items found. #{ hasFilterApplied ? "Try clearing the filters." : "" }
