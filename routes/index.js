@@ -4,30 +4,43 @@ const {
   addCategoryFormGET,
   addCategoryFormPOST,
 } = require("../controllers/categoryController");
+
 const {
   inventoryPage,
-  itemPage,
   indexPage,
+} = require("../controllers/inventoryController");
+
+const {
+  itemPage,
   addItemFormGET,
   addItemFormPOST,
   updateItemFormPOST,
   updateItemFormGET,
-} = require("../controllers/inventoryController");
+  deleteItemFormGET,
+  deleteItemFormPOST,
+} = require("../controllers/itemController");
 
 const router = express.Router();
 
+// INVENTORY CONTROLLERS
 router.get("/", indexPage);
 router.get("/inventory", inventoryPage);
+
+// ITEM CONTROLLERS
+router.get("/inventory/item/:id", itemPage);
 
 router.get("/inventory/item/create", addItemFormGET);
 router.post("/inventory/item/create", addItemFormPOST);
 
-router.get("/inventory/category/create", addCategoryFormGET);
-router.post("/inventory/category/create", addCategoryFormPOST);
-
-router.get("/inventory/item/:id", itemPage);
 router.get("/inventory/item/:id/update", updateItemFormGET);
 router.post("/inventory/item/:id/update", updateItemFormPOST);
+
+router.get("/inventory/item/:id/delete", deleteItemFormGET);
+router.post("/inventory/item/:id/delete", deleteItemFormPOST);
+
+// CATEGORY CONTROLLERS
+router.get("/inventory/category/create", addCategoryFormGET);
+router.post("/inventory/category/create", addCategoryFormPOST);
 
 router.get("/inventory/category/:id/update", updateCategoryForm);
 
