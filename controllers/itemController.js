@@ -138,7 +138,19 @@ exports.updateItemFormPOST = [
 ];
 
 exports.deleteItemFormGET = asyncHandler(async (req, res, next) => {
-  res.render("delete-item", { title: "Delete Item" });
+  const item = await Item.findById(req.params.id, "name");
+
+  if (item === null) {
+    const err = new Error("Item not found");
+    err.status = 404;
+    next(err);
+  }
+
+  res.render("delete-item", { title: "Delete Item", item });
 });
 
-exports.deleteItemFormPOST = asyncHandler(async (req, res, next) => {});
+exports.deleteItemFormPOST = asyncHandler(async (req, res, next) => {
+  await Item.findByIdAndRemove(req.params.id);
+
+  res.redirect("/inventory");
+});
