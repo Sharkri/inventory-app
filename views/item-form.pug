@@ -10,7 +10,7 @@ block content
         type="text",
         name="name",
         class="focus:ring-opacity-50 focus:ring-sky-200",
-        value=name,
+        value=item.name,
         required
       )
 
@@ -18,10 +18,9 @@ block content
       strong Description #[span.text-gray-400.text-sm.font-normal (optional)]
       textarea.border-gray-400.shadow-sm.border-gray-300.rounded-md(
         name="description",
-        value=description,
         placeholder="Enter a description...",
         class="focus:ring-opacity-50 focus:ring-sky-200"
-      )
+      )= item.description
     label.flex.flex-col.gap-2
       strong Categories #[span.text-gray-400.text-sm.font-normal (optional, max 5)]
 
@@ -39,7 +38,7 @@ block content
       strong Price
       input.border-gray-400.shadow-sm.border-gray-300.rounded-md(
         type="number",
-        value=price,
+        value=item.price ? item.price.amount : undefined,
         name="price",
         placeholder="Enter price in USD",
         class="focus:ring-opacity-50 focus:ring-sky-200",
@@ -52,7 +51,7 @@ block content
       strong Number in stock
       input.border-gray-400.shadow-sm.border-gray-300.rounded-md(
         type="number",
-        value=numberInStock,
+        value=item.numberInStock,
         name="numberInStock",
         class="focus:ring-opacity-50 focus:ring-sky-200",
         min="0",
@@ -65,4 +64,4 @@ block content
       each error in errors
         p.text-red-500.text-sm= error.msg
 
-    button.p-3.bg-blue-500.font-bold.rounded-md(class="text-white/90", type="submit") Create Item
+    button.p-3.bg-blue-500.font-bold.rounded-md(class="text-white/90", type="submit")= title

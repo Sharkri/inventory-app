@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .flex.flex-col.justify-center.items-center
+    //- TODO: Add categories and others
+    div
+      h1.text-xl.font-bold.mb-4= item.name
+      p.text-gray-400.text-sm.mb-2= item.description
+      p.text-lg.text-green-400.font-bold= item.priceString
+      .mt-3
+        a.mr-2.bg-green-600.py-1.px-2.rounded-md.font-bold.text-white(
+          href=item.url + "/update"
+        ) Update Item
+
+        a.bg-red-600.py-1.px-2.rounded-md.font-bold.text-white(
+          href=item.url + "/delete"
+        ) Delete Item
