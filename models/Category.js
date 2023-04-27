@@ -15,6 +15,11 @@ const CategorySchema = new Schema({
 });
 
 CategorySchema.virtual("url").get(function getCategoryURL() {
+  return `/inventory/category/${this._id}`;
+});
+
+// gets all items with category
+CategorySchema.virtual("itemsURL").get(function getCategoryItemsURL() {
   return `/inventory?category=${this._id}`;
 });
 

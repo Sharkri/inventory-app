@@ -1,8 +1,10 @@
 const express = require("express");
 const {
-  updateCategoryForm,
   addCategoryFormGET,
   addCategoryFormPOST,
+  categoryPage,
+  updateCategoryFormGET,
+  updateCategoryFormPOST,
 } = require("../controllers/categoryController");
 
 const {
@@ -43,6 +45,9 @@ router.get("/inventory/item/:id", itemPage);
 router.get("/inventory/category/create", addCategoryFormGET);
 router.post("/inventory/category/create", addCategoryFormPOST);
 
-router.get("/inventory/category/:id/update", updateCategoryForm);
+router.get("/inventory/category/:id/update", updateCategoryFormGET);
+router.post("/inventory/category/:id/update", updateCategoryFormPOST);
+
+router.get("/inventory/category/:id", categoryPage);
 
 module.exports = router;

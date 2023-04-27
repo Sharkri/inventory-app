@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1.text-2xl.font-bold.mb-2= category.name
+  p.text-sm.text-gray-400= category.description
+
+  p Item Count: #{ numItems }
+
+  a.font-bold.text-blue-400(href=category.itemsURL) See all items
+
+  .flex.gap-2
+    a(href=category.url + "/update") Update Category
+    a(href=category.url + "/delete") Delete Category

@@ -35,3 +35,12 @@ exports.itemValidationRules = () => [
     .isInt({ min: 0 })
     .withMessage("Please enter a valid stock number"),
 ];
+
+exports.categoryValidationRules = () => [
+  body("name")
+    .trim()
+    .isString()
+    .isLength({ min: 1 })
+    .withMessage("Category name must be specified."),
+  body("description").isString(),
+];
