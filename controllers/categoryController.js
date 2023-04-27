@@ -16,6 +16,34 @@ exports.categoryPage = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.categoriesPage = asyncHandler(async (req, res, next) => {
+  const categories = await Category.aggregate([
+    {
+      // lookup all items that contain category
+      $lookup: {
+        from: "items",
+        localField: "_id",
+        foreignField: "categories",
+        as: "items",
+      },
+    },
+    {
+      // project item count for category
+      $project: {
+        name: 1,
+        description: 1,
+        itemCount: { $size: "$items" },
+        url: { $concat: ["/inventory/category/", { $toString: "$_id" }] },
+      },
+    },
+  ]);
+
+  res.render("categories", {
+    title: "Categories",
+    categories,
+  });
+});
+
 exports.addCategoryFormGET = asyncHandler(async (req, res, next) => {
   res.render("category-form", { title: "Create Category", category: {} });
 });

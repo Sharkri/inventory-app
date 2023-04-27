@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1.text-2xl.font-bold.mb-7= title
+  .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
+    each category in categories 
+      a.p-3.shadow-md.bg-neutral-100.max-w-xs.flex.flex-col.gap-2.justify-between(
+        href=category.url
+      )
+        h1.text-lg.font-bold= category.name
+        if category.description
+          p.text-gray-400.text-sm= category.description
+        p Item Count: #{ category.itemCount }

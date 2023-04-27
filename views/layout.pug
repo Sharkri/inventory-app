@@ -11,13 +11,29 @@ html(lang="en")
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     )
   body.bg-neutral-50
-    header.sticky.top-0.px-4.py-3.flex.justify-between.gap-3.shadow-sm.font-bold.bg-neutral-50.border-b.border-b-slate-200
-      a(href="/") Home
+    header.sticky.top-0.px-6.py-3.flex.justify-between.gap-3.shadow-sm.font-bold.bg-neutral-50.border-b.border-b-slate-200
+      a(href="/")
+        i.fa.fa-home.fa-lg(aria-hidden="true")
 
       nav.flex.gap-3
         a(href="/inventory") Inventory
-        a(href="/inventory/item/create") Create item
-        a(href="/inventory/category/create") Create Category
+        a(href="/inventory/categories") Categories
+        .relative
+          button(type="button") Create #[i.fa.fa-chevron-down(aria-hidden="true")]
+          ul.absolute.right-0.mt-2.bg-white.shadow-lg.rounded.w-48.hidden.flex.flex-col
+            a.px-4.py-2.flex.items-center.gap-3(
+              href="/inventory/item/create",
+              class="hover:bg-neutral-200"
+            ) #[i.fa.fa-plus.text-gray-500(aria-hidden="true")] Item
+            a.px-4.py-2.flex.items-center.gap-3(
+              href="/inventory/category/create",
+              class="hover:bg-neutral-200"
+            ) #[i.fa.fa-plus.text-gray-500(aria-hidden="true")] Category
+        script.
+          document.querySelector("button").addEventListener("click", () => {
+            const dropdown = document.querySelector("ul");
+            dropdown.classList.toggle("hidden");
+          });
 
     .py-5.px-7.max-w-7xl.mx-auto
       block content
