@@ -27,7 +27,6 @@ router.get("/", indexPage);
 router.get("/inventory", inventoryPage);
 
 // ITEM CONTROLLERS
-router.get("/inventory/item/:id", itemPage);
 
 router.get("/inventory/item/create", addItemFormGET);
 router.post("/inventory/item/create", addItemFormPOST);
@@ -37,6 +36,8 @@ router.post("/inventory/item/:id/update", updateItemFormPOST);
 
 router.get("/inventory/item/:id/delete", deleteItemFormGET);
 router.post("/inventory/item/:id/delete", deleteItemFormPOST);
+
+router.get("/inventory/item/:id", itemPage);
 
 // CATEGORY CONTROLLERS
 router.get("/inventory/category/create", addCategoryFormGET);
