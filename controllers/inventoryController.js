@@ -1,8 +1,9 @@
 const asyncHandler = require("express-async-handler");
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const Category = require("../models/Category");
 const Item = require("../models/Item");
 const convertToArray = require("../helpers/convertToArray");
+const { itemValidationRules } = require("../helpers/validation-rules");
 
 exports.indexPage = asyncHandler(async (req, res, next) => {
   const [itemCount, categoryCount] = await Promise.all([
@@ -52,7 +53,9 @@ exports.inventoryPage = asyncHandler(async (req, res, next) => {
 });
 
 exports.itemPage = asyncHandler(async (req, res, next) => {
-  res.send("TODO: Implement item page");
+  const item = await Item.findById(req.params.id);
+
+  res.render("item-page", { title: "Item Page", item });
 });
 
 exports.addItemFormGET = asyncHandler(async (req, res, next) => {
@@ -64,45 +67,13 @@ exports.addItemFormGET = asyncHandler(async (req, res, next) => {
   });
 });
 
-async function checkIfCategoriesExists(categories) {
-  const categoryCount = await Category.countDocuments({
-    _id: { $in: categories },
-  });
-
-  // if one or more categories were not found in the database
-  if (categoryCount !== categories.length) {
-    return Promise.reject();
-  }
-
-  return true;
-}
-
 exports.addItemFormPOST = [
   (req, res, next) => {
     req.body.categories = convertToArray(req.body.categories);
     next();
   },
-  // Validate and sanitize fields.
-  body("name")
-    .trim()
-    .isString()
-    .isLength({ min: 1 })
-    .withMessage("Name must be specified."),
-  body("description").isString(),
-
-  body("categories")
-    .custom(checkIfCategoriesExists)
-    .withMessage(
-      "One or more categories do not exist. Please create them first."
-    )
-    .custom((array) => array.length <= 5)
-    .withMessage("You can only have 5 categories max."),
-
-  body("price").isFloat({ min: 0 }).withMessage("Please enter a valid price."),
-  body("numberInStock")
-    .isInt({ min: 0 })
-    .withMessage("Please enter a valid stock number"),
-
+  // Validate item fields
+  ...itemValidationRules(),
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
@@ -142,57 +113,10 @@ exports.addItemFormPOST = [
   }),
 ];
 
-exports.updateItemForm = asyncHandler(async (req, res, next) => {
+exports.updateItemFormGET = asyncHandler(async (req, res, next) => {
   res.send("TODO: Implement update item page");
 });
 
-exports.addCategoryFormGET = asyncHandler(async (req, res, next) => {
-  res.render("create-category", { title: "Create Category" });
-});
-
-exports.addCategoryFormPOST = [
-  body("name")
-    .trim()
-    .isString()
-    .isLength({ min: 1 })
-    .withMessage("Category name must be specified."),
-  body("description").isString(),
-
-  asyncHandler(async (req, res, next) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      res.render("create-category", {
-        name: req.body.name,
-        description: req.body.description,
-        errors: errors.array(),
-      });
-      return;
-    }
-
-    const categoryExists = await Category.findOne(
-      { name: req.body.name },
-      "_id"
-    )
-      .collation({ locale: "en", strength: 2 })
-      .exec();
-
-    // if category already exists
-    if (categoryExists) {
-      res.redirect(categoryExists.url);
-      return;
-    }
-
-    const category = new Category({
-      name: req.body.name,
-      description: req.body.description,
-    });
-
-    await category.save();
-    res.redirect(category.url);
-  }),
-];
-
-exports.updateCategoryForm = asyncHandler(async (req, res, next) => {
-  res.send("TODO: Implement update category page");
+exports.updateItemFormPOST = asyncHandler(async (req, res, next) => {
+  res.send("TODO: Implement update item page");
 });
