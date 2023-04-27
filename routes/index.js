@@ -5,6 +5,8 @@ const {
   categoryPage,
   updateCategoryFormGET,
   updateCategoryFormPOST,
+  deleteCategoryGET,
+  deleteCategoryPOST,
 } = require("../controllers/categoryController");
 
 const {
@@ -47,6 +49,9 @@ router.post("/inventory/category/create", addCategoryFormPOST);
 
 router.get("/inventory/category/:id/update", updateCategoryFormGET);
 router.post("/inventory/category/:id/update", updateCategoryFormPOST);
+
+router.get("/inventory/category/:id/delete", deleteCategoryGET);
+router.post("/inventory/category/:id/delete", deleteCategoryPOST);
 
 router.get("/inventory/category/:id", categoryPage);
 

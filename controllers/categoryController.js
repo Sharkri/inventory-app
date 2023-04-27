@@ -113,3 +113,30 @@ exports.updateCategoryFormPOST = [
     }
   }),
 ];
+
+exports.deleteCategoryGET = asyncHandler(async (req, res, next) => {
+  const category = await Category.findById(req.params.id, "name").exec();
+  const categoryItems = await Item.find(
+    { categories: req.params.id },
+    "name"
+  ).exec();
+
+  if (category === null) {
+    const err = new Error("Category not found");
+    err.status = 404;
+    next(err);
+  } else {
+    res.render("delete-category", {
+      title: "Delete Category",
+      category,
+      categoryItems,
+    });
+  }
+});
+
+exports.deleteCategoryPOST = asyncHandler(async (req, res, next) => {
+  await Item.deleteMany({ categories: req.params.id }).exec();
+  await Category.findByIdAndRemove(req.params.id).exec();
+
+  res.redirect("/inventory");
+});

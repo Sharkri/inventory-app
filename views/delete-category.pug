@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  .flex.justify-center.items-center
+    div
+      h1.text-2xl.font-bold.mb-7= title
+
+      form(action="", method="post")
+        h2.mb-8.text-lg Are you sure you want to delete #[strong #{ category.name }]?
+
+        p.flex.items-center.whitespace-pre-wrap.flex-wrap
+          span.text-xl.mr-2
+            i.fa.fa-exclamation-triangle.text-amber-400(aria-hidden="true")
+          span.text-red-600 #[strong Warning!] Deleting this category will also delete the following items:
+            = " "
+
+          each item, index in categoryItems
+            a.font-semibold.truncate.block.text-blue-600.underline.whitespace-pre-wrap(
+              href=item.url,
+              class="max-w-[160px]",
+              target="_blank",
+              rel="noreferrer"
+            )= item.name
+            if index !== categoryItems.length - 1
+              = ", "
+
+        .mt-6.flex.gap-2
+          a.bg-gray-200.font-bold.py-1.px-2.rounded-md(href=category.url) Cancel
+          button.bg-red-700.text-white.font-bold.py-1.px-2.rounded-md(
+            type="submit"
+          )= title
