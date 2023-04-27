@@ -8,6 +8,13 @@ const { itemValidationRules } = require("../helpers/validation-rules");
 exports.itemPage = asyncHandler(async (req, res, next) => {
   const item = await Item.findById(req.params.id);
 
+  if (item === null) {
+    const err = new Error("Item not found");
+    err.status = 404;
+
+    next(err);
+  }
+
   res.render("item-page", { title: "Item Page", item });
 });
 
@@ -68,6 +75,13 @@ exports.updateItemFormGET = asyncHandler(async (req, res, next) => {
     Item.findById(req.params.id),
     Category.find({}, "name").exec(),
   ]);
+
+  if (item === null) {
+    const err = new Error("Item not found");
+    err.status = 404;
+
+    next(err);
+  }
 
   res.render("item-form", {
     title: "Update Item",
