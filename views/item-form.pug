@@ -52,7 +52,7 @@ block content
         strong Item Image #[span.text-gray-400.text-sm.font-normal (optional)]
 
         img.w-28.h-28(
-          src=item.image && item.image.data ? `data:${item.image.contentType};base64,${item.image.data.toString("base64")}` : "https://placehold.co/112x112",
+          src=item.imageUrl || "https://placehold.co/112x112",
           alt=""
         )
 
@@ -70,7 +70,9 @@ block content
 
           span.text-sm.font-bold Select an image
 
-      label.flex.gap-2.items-center.justify-center.mt-2
+      label#remove-image-label.flex.gap-2.items-center.justify-center.mt-2(
+        style=item.imageUrl ? "" : "display: none;"
+      )
         input.rounded.border-gray-300.text-indigo-600.shadow-sm(
           type="checkbox",
           name="clear-image",

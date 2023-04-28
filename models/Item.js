@@ -35,4 +35,12 @@ ItemSchema.virtual("priceString").get(function getPriceString() {
   return this.price.symbol + this.price.amount;
 });
 
+ItemSchema.virtual("imageUrl").get(function getImageUrl() {
+  if (!this.image.data) return "";
+
+  return `data:${
+    this.image.contentType
+  };base64,${this.image.data.toString("base64")}`;
+});
+
 module.exports = mongoose.model("Item", ItemSchema);
