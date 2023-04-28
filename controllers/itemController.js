@@ -1,5 +1,19 @@
 const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
+const multer = require("multer");
+
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("File format should be an image"), false);
+    }
+  },
+});
+
 const Category = require("../models/Category");
 const Item = require("../models/Item");
 const convertToArray = require("../helpers/convertToArray");
@@ -7,7 +21,6 @@ const { itemValidationRules } = require("../helpers/validation-rules");
 
 exports.itemPage = asyncHandler(async (req, res, next) => {
   const item = await Item.findById(req.params.id);
-
   if (item === null) {
     const err = new Error("Item not found");
     err.status = 404;
@@ -29,12 +42,15 @@ exports.addItemFormGET = asyncHandler(async (req, res, next) => {
 });
 
 exports.addItemFormPOST = [
+  upload.single("image"),
+
   (req, res, next) => {
     req.body.categories = convertToArray(req.body.categories);
     next();
   },
   // Validate item fields
   ...itemValidationRules(),
+
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
@@ -47,6 +63,12 @@ exports.addItemFormPOST = [
       categories,
       price: { amount: price },
       numberInStock,
+      image: req.file
+        ? {
+            data: req.file.buffer,
+            contentType: req.file.mimetype,
+          }
+        : undefined,
     });
 
     if (!errors.isEmpty()) {
@@ -95,26 +117,44 @@ exports.updateItemFormGET = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateItemFormPOST = [
+  upload.single("image"),
+
   (req, res, next) => {
     req.body.categories = convertToArray(req.body.categories);
     next();
   },
+
   // Validate item fields
   ...itemValidationRules(),
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
-    const { name, description, categories, price, numberInStock } = req.body;
+    const {
+      name,
+      description,
+      categories,
+      price,
+      numberInStock,
+      "clear-image": removeImage,
+    } = req.body;
 
-    const item = new Item({
+    const itemObj = {
       name,
       description,
       categories,
       price: { amount: price },
       numberInStock,
       _id: req.params.id, // This is required, or a new ID will be assigned!
-    });
+    };
+
+    if (removeImage === "on") {
+      itemObj.$unset = { image: "" };
+    } else if (req.file) {
+      itemObj.image = { data: req.file.buffer, contentType: req.file.mimetype };
+    }
+
+    const item = new Item(itemObj);
 
     if (!errors.isEmpty()) {
       const allCategories = await Category.find({}, "name").exec();
@@ -131,7 +171,7 @@ exports.updateItemFormPOST = [
         errors: errors.array(),
       });
     } else {
-      await Item.findByIdAndUpdate(req.params.id, item, {});
+      await Item.findByIdAndUpdate(req.params.id, itemObj, {});
       res.redirect(item.url);
     }
   }),

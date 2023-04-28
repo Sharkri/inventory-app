@@ -7,6 +7,11 @@ block content
       h1.text-xl.font-bold.mb-4= item.name
       p.text-gray-400.text-sm.mb-2= item.description
       p.text-lg.text-green-400.font-bold= item.priceString
+      if item.image.data
+        img(
+          src=`data:${item.image.contentType};base64,${item.image.data.toString("base64")}`,
+          alt=""
+        )
       .mt-3
         a.mr-2.bg-green-600.py-1.px-2.rounded-md.font-bold.text-white(
           href=item.url + "/update"

@@ -21,6 +21,10 @@ const ItemSchema = new Schema({
     default: [],
   },
   numberInStock: { type: Number, required: true },
+  image: {
+    data: Buffer,
+    contentType: String,
+  },
 });
 
 ItemSchema.virtual("url").get(function getItemURL() {

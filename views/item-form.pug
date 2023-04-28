@@ -1,9 +1,43 @@
 extends layout
 
 block content
+  script.
+    let prevImg = "";
+    function clearPreview() {
+      const clearPreview = document.querySelector('input[type="checkbox"]');
+      const preview = document.querySelector("img");
+      const imageInput = document.querySelector('input[type="file"]');
+
+      imageInput.disabled = clearPreview.checked;
+
+      if (clearPreview.checked) {
+        prevImg = preview.src;
+        preview.src = "https://placehold.co/112x112";
+      } else {
+        preview.src = prevImg;
+      }
+    }
+
+    function previewFile() {
+      const preview = document.querySelector("img");
+      const file = document.querySelector('input[type="file"]').files[0];
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        preview.src = reader.result;
+      };
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
   h1.text-xl.font-bold.mb-5= title
 
-  form.flex.flex-col.gap-6.max-w-sm(action="", method="post")
+  form.flex.flex-col.gap-6.max-w-sm(
+    action="",
+    method="post",
+    enctype="multipart/form-data"
+  )
     label.flex.flex-col.gap-2
       strong Item Name
       input.border-gray-400.shadow-sm.border-gray-300.rounded-md(
@@ -13,6 +47,38 @@ block content
         value=item.name,
         required
       )
+    div
+      label.flex.flex-col.gap-2.items-center
+        strong Item Image #[span.text-gray-400.text-sm.font-normal (optional)]
+
+        img.w-28.h-28(
+          src=item.image && item.image.data ? `data:${item.image.contentType};base64,${item.image.data.toString("base64")}` : "https://placehold.co/112x112",
+          alt=""
+        )
+
+        input.text-sm.hidden.peer(
+          type="file",
+          name="image",
+          accept="image/*",
+          onchange="previewFile()"
+        )
+        span.w-full.bg-gray-100.py-1.px-2.rounded-md.cursor-pointer.text-zinc-400.max-w-xs.flex.items-center.justify-center.gap-3(
+          class="peer-disabled:opacity-50 peer-disabled:cursor-not-allowed"
+        )
+          span(class="text-[19px]")
+            i.fa.fa-cloud-upload(aria-hidden="true")
+
+          span.text-sm.font-bold Select an image
+
+      label.flex.gap-2.items-center.justify-center.mt-2
+        input.rounded.border-gray-300.text-indigo-600.shadow-sm(
+          type="checkbox",
+          name="clear-image",
+          onchange="clearPreview()",
+          class="focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+        )
+
+        strong.text-sm Remove Image
 
     label.flex.flex-col.gap-2
       strong Description #[span.text-gray-400.text-sm.font-normal (optional)]
