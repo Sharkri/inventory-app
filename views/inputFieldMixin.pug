@@ -9,9 +9,9 @@ mixin inputField(labelText)
 
     if attributes.type == 'textarea'
       textarea.shadow-sm.border-gray-200.rounded-md(
-        class="focus:ring-opacity-50 focus:ring-sky-200"
+        class="focus:ring-opacity-50 focus:ring-sky-200 dark:bg-dark-secondary dark:border-zinc-800 dark:focus:ring-blue-300"
       )&attributes(attributes)= attributes.value
     else
       input.shadow-sm.border-gray-200.rounded-md(
-        class="focus:ring-opacity-50 focus:ring-sky-200"
+        class="focus:ring-opacity-50 focus:ring-sky-200 dark:bg-dark-secondary dark:border-zinc-800 dark:focus:ring-blue-300"
       )&attributes(attributes)

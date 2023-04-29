@@ -29,10 +29,16 @@ block content
     if items.length
       .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
         each item in items
-          .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-4
+          .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-4(
+            class="dark:bg-dark-secondary shadow-white/10"
+          )
             a.block.grow(href=item.url)
               if item.imageUrl
-                img.w-24.h-24.mb-5.mx-auto(src=item.imageUrl, alt="")
+                img.w-24.h-24.mb-5.mx-auto(
+                  src=item.imageUrl,
+                  class="dark:brightness-90",
+                  alt=""
+                )
               p.font-bold.text-lg.truncate(href=item.url)= item.name
               p.text-green-500.font-bold.my-2= item.priceString
               p.text-sm
@@ -43,9 +49,9 @@ block content
 
             .flex.flex-wrap.gap-2
               each category in item.categories 
-                a.text-xs.bg-gray-200.px-2.rounded-full.truncate.block(
+                a.text-xs.bg-gray-200.px-2.rounded-full.truncate.block.py-1(
                   href=category.url,
-                  class="py-[1.5px]"
+                  class="dark:bg-dark"
                 ) #{ category.name }
     else
       p.grow.text-gray-500.grid.place-items-center No items found. #{ hasFilterApplied ? "Try clearing the filters." : "" }

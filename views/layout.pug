@@ -10,8 +10,18 @@ html(lang="en")
       rel="stylesheet",
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     )
-  body.bg-neutral-50
-    header.sticky.top-0.px-6.py-3.flex.justify-between.gap-3.shadow-sm.font-bold.bg-neutral-50.border-b.border-b-slate-200
+    script.
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (localStorage.getItem("color-theme") === "dark" || (!("color-theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
+  body.bg-light(class="text-black/80 dark:text-white/80 dark:bg-dark")
+    header.sticky.top-0.px-6.py-3.flex.justify-between.gap-3.shadow-sm.font-bold.bg-neutral-50.border-b.border-b-slate-200(
+      class="dark:bg-dark dark:border-b-slate-600"
+    )
       a(href="/")
         i.fa.fa-home.fa-lg(aria-hidden="true")
 
@@ -20,14 +30,17 @@ html(lang="en")
         a(href="/inventory/categories") Categories
         .relative
           button(type="button") Create #[i.fa.fa-chevron-down(aria-hidden="true")]
-          ul.absolute.right-0.mt-2.bg-white.shadow-lg.rounded.w-48.hidden.flex.flex-col
+          ul.absolute.right-0.mt-2.shadow-lg.rounded.w-48.hidden.flex.flex-col.bg-neutral-50(
+            class="dark:bg-dark dark:shadow-white/10"
+          )
             a.px-4.py-2.flex.items-center.gap-3(
               href="/inventory/item/create",
-              class="hover:bg-neutral-200"
+              class="hover:bg-neutral-200 dark:hover:bg-white/10"
             ) #[i.fa.fa-plus.text-gray-500(aria-hidden="true")] Item
+
             a.px-4.py-2.flex.items-center.gap-3(
               href="/inventory/category/create",
-              class="hover:bg-neutral-200"
+              class="hover:bg-neutral-200 dark:hover:bg-white/10"
             ) #[i.fa.fa-plus.text-gray-500(aria-hidden="true")] Category
         script.
           document.querySelector("button").addEventListener("click", () => {

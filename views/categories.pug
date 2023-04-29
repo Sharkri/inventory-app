@@ -5,7 +5,8 @@ block content
   .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
     each category in categories 
       a.p-3.shadow-md.bg-neutral-100.max-w-xs.flex.flex-col.gap-2.justify-between(
-        href=category.url
+        href=category.url,
+        class="dark:bg-dark-secondary"
       )
         h1.text-lg.font-bold= category.name
         if category.description

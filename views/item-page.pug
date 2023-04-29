@@ -9,9 +9,16 @@ block content
       if item.imageUrl
         img.w-32.h-32(src=item.imageUrl, alt="")
 
+      p.text-sm
+        if item.numberInStock === 0
+          span.text-red-600 Out of stock
+        else
+          span.text-gray-400 Inventory: #{ item.numberInStock }
+
       .flex.flex-wrap.gap-2
         each category in item.categories 
           a.text-sm.bg-gray-200.py-1.px-2.rounded-full.truncate.block(
+            class="dark:bg-dark-secondary",
             href=category.url
           ) #{ category.name }
       .mt-3

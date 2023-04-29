@@ -5,6 +5,7 @@ include inputFieldMixin.pug
 block content
   script.
     let prevImg = "";
+
     function clearPreview() {
       const clearPreview = document.querySelector('input[type="checkbox"]');
       const preview = document.querySelector("img");
@@ -22,6 +23,7 @@ block content
 
     function previewFile() {
       const preview = document.querySelector("img");
+      const removeImageCheckbox = document.getElementById("remove-image-checkbox");
       const file = document.querySelector('input[type="file"]').files[0];
       const reader = new FileReader();
       reader.onloadend = function () {
@@ -29,9 +31,11 @@ block content
       };
 
       if (file) {
+        removeImageCheckbox.style.visibility = "visible";
         reader.readAsDataURL(file);
       } else {
         preview.src = "https://placehold.co/96x96";
+        removeImageCheckbox.style.visibility = "hidden";
       }
     }
 
@@ -74,15 +78,15 @@ block content
           onchange="previewFile()"
         )
         span.w-full.bg-gray-100.py-1.px-2.rounded-md.cursor-pointer.text-zinc-400.max-w-xs.flex.items-center.justify-center.gap-3(
-          class="peer-disabled:opacity-50 peer-disabled:cursor-not-allowed"
+          class="peer-disabled:opacity-50 peer-disabled:cursor-not-allowed dark:bg-dark-secondary dark:text-zinc-300"
         )
           span(class="text-[19px]")
             i.fa.fa-cloud-upload(aria-hidden="true")
 
           span.text-sm.font-bold Select an image
 
-      label#remove-image-label.flex.gap-2.items-center.justify-center.mt-2(
-        style=item.imageUrl ? "" : "display: none;"
+      label#remove-image-checkbox.flex.gap-2.items-center.justify-center.mt-2(
+        style=item.imageUrl ? "visibility: visible;" : "visibility: hidden;"
       )
         input.rounded.border-gray-300.text-indigo-600.shadow-sm(
           type="checkbox",
@@ -125,7 +129,7 @@ block content
 
       select.shadow-sm.border-gray-200.rounded-md(
         name="categories",
-        class="focus:ring-opacity-50 focus:ring-sky-200",
+        class="focus:ring-opacity-50 focus:ring-sky-200 dark:focus:ring-blue-300 dark:border-zinc-800 dark:bg-dark-secondary",
         multiple
       )
         each category in categories 
