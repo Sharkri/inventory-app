@@ -32,10 +32,14 @@ block content
           .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-4.justify-between
             a.block(href=item.url)
               if item.imageUrl
-                img.w-24.h-24.mx-auto(src=item.imageUrl, alt="")
-              p.font-bold.text-lg.truncate.mt-5(href=item.url)= item.name
+                img.w-24.h-24.mb-5.mx-auto(src=item.imageUrl, alt="")
+              p.font-bold.text-lg.truncate(href=item.url)= item.name
               p.text-green-500.font-bold.my-2= item.priceString
-              p.text-gray-400.text-sm Inventory: #{ item.numberInStock }
+              p.text-sm
+                if item.numberInStock === 0
+                  span.text-red-600 Out of stock
+                else
+                  span.text-gray-400 Inventory: #{ item.numberInStock }
 
             .flex.flex-wrap.gap-2
               each category in item.categories 

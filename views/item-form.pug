@@ -28,6 +28,8 @@ block content
 
       if (file) {
         reader.readAsDataURL(file);
+      } else {
+        preview.src = "https://placehold.co/96x96";
       }
     }
 
@@ -51,7 +53,7 @@ block content
       label.flex.flex-col.gap-2.items-center
         strong Item Image #[span.text-gray-400.text-sm.font-normal (optional)]
 
-        img.w-24.h-24.object-cover(
+        img.w-24.h-24(
           src=item.imageUrl || "https://placehold.co/96x96",
           alt=""
         )
