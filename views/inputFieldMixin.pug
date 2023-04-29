@@ -1,9 +1,11 @@
 mixin inputField(labelText)
   label.flex.flex-col.gap-2
     strong #{ labelText }
+      = " "
       if !attributes.required
-        = " "
         span.text-gray-400.text-sm.font-normal (optional)
+      else
+        span.text-red-600.text-sm.font-normal *
 
     if attributes.type == 'textarea'
       textarea.shadow-sm.border-gray-200.rounded-md(
