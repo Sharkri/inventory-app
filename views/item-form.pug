@@ -42,6 +42,15 @@ block content
     method="post",
     enctype="multipart/form-data"
   )
+    +inputField("Admin Password")(
+      type="password",
+      name="adminPassword",
+      autocomplete="current-password",
+      value=adminPassword,
+      placeholder="Enter the admin password",
+      required
+    )
+
     +inputField("Item Name")(
       type="text",
       name="name",

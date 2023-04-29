@@ -1,5 +1,7 @@
 extends layout
 
+include inputFieldMixin.pug
+
 block content
   .flex.justify-center.items-center
     div
@@ -8,7 +10,17 @@ block content
       form(action="", method="post")
         h2.text-lg Are you sure you want to delete #[strong #{ item.name }]?
 
-        .mt-4.flex.gap-2
+        .max-w-sm.my-6
+          +inputField("Admin Password")(
+            type="password",
+            name="adminPassword",
+            autocomplete="current-password",
+            value=adminPassword,
+            placeholder="Enter the admin password",
+            required
+          )
+
+        .flex.gap-2
           a.bg-gray-200.font-bold.py-1.px-2.rounded-md(href=item.url) Cancel
           button.bg-red-700.text-white.font-bold.py-1.px-2.rounded-md(
             type="submit"

@@ -15,6 +15,10 @@ async function checkIfCategoriesExists(categories) {
 }
 
 exports.itemValidationRules = () => [
+  body("adminPassword")
+    .custom((adminPassword) => process.env.ADMIN_PASSWORD === adminPassword)
+    .withMessage("Incorrect admin password"),
+
   body("name")
     .trim()
     .isString()
@@ -37,6 +41,10 @@ exports.itemValidationRules = () => [
 ];
 
 exports.categoryValidationRules = () => [
+  body("adminPassword")
+    .custom((adminPassword) => process.env.ADMIN_PASSWORD === adminPassword)
+    .withMessage("Incorrect admin password"),
+
   body("name")
     .trim()
     .isString()

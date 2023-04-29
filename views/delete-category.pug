@@ -1,5 +1,7 @@
 extends layout
 
+include inputFieldMixin.pug
+
 block content
   .flex.justify-center.items-center
     div
@@ -23,6 +25,15 @@ block content
             )= item.name
             if index !== categoryItems.length - 1
               = ", "
+        .max-w-sm.mt-4
+          +inputField("Admin Password")(
+            type="password",
+            name="adminPassword",
+            autocomplete="current-password",
+            value=adminPassword,
+            placeholder="Enter the admin password",
+            required
+          )
 
         .mt-6.flex.gap-2
           a.bg-gray-200.font-bold.py-1.px-2.rounded-md(href=category.url) Cancel

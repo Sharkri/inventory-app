@@ -163,6 +163,13 @@ exports.deleteCategoryGET = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteCategoryPOST = asyncHandler(async (req, res, next) => {
+  if (req.body.adminPassword !== process.env.ADMIN_PASSWORD) {
+    const err = new Error("Incorrect admin password");
+    err.status = 403;
+    next(err);
+    return;
+  }
+
   await Item.deleteMany({ categories: req.params.id }).exec();
   await Category.findByIdAndRemove(req.params.id).exec();
 

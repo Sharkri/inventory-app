@@ -6,6 +6,14 @@ block content
   h1.text-2xl.font-bold.mb-7= title
 
   form.flex.flex-col.gap-6.max-w-sm(action="", method="post")
+    +inputField("Admin Password")(
+      type="password",
+      name="adminPassword",
+      autocomplete="current-password",
+      value=adminPassword,
+      placeholder="Enter the admin password",
+      required
+    )
     +inputField("Category Name")(
       type="text",
       name="name",

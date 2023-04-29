@@ -190,6 +190,13 @@ exports.deleteItemFormGET = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteItemFormPOST = asyncHandler(async (req, res, next) => {
+  if (req.body.adminPassword !== process.env.ADMIN_PASSWORD) {
+    const err = new Error("Incorrect admin password");
+    err.status = 403;
+    next(err);
+    return;
+  }
+
   await Item.findByIdAndRemove(req.params.id);
 
   res.redirect("/inventory");
