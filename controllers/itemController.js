@@ -20,7 +20,7 @@ const convertToArray = require("../helpers/convertToArray");
 const { itemValidationRules } = require("../helpers/validation-rules");
 
 exports.itemPage = asyncHandler(async (req, res, next) => {
-  const item = await Item.findById(req.params.id);
+  const item = await Item.findById(req.params.id).populate("categories").exec();
   if (item === null) {
     const err = new Error("Item not found");
     err.status = 404;
