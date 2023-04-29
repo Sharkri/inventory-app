@@ -29,8 +29,8 @@ block content
     if items.length
       .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
         each item in items
-          .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-4.justify-between
-            a.block(href=item.url)
+          .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-4
+            a.block.grow(href=item.url)
               if item.imageUrl
                 img.w-24.h-24.mb-5.mx-auto(src=item.imageUrl, alt="")
               p.font-bold.text-lg.truncate(href=item.url)= item.name
