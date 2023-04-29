@@ -1,26 +1,23 @@
 extends layout
 
+include inputFieldMixin.pug
+
 block content
   h1.text-2xl.font-bold.mb-7= title
 
   form.flex.flex-col.gap-6.max-w-sm(action="", method="post")
-    label.flex.flex-col.gap-2
-      strong Category Name
-      input.border-gray-400.shadow-sm.border-gray-300.rounded-md(
-        type="text",
-        name="name",
-        class="focus:ring-opacity-50 focus:ring-sky-200",
-        value=category.name,
-        required
-      )
-
-    label.flex.flex-col.gap-2
-      strong Description #[span.text-gray-400.text-sm.font-normal (optional)]
-      textarea.border-gray-400.shadow-sm.border-gray-300.rounded-md(
-        name="description",
-        placeholder="Enter a description...",
-        class="focus:ring-opacity-50 focus:ring-sky-200"
-      )= category.description
+    +inputField("Category Name")(
+      type="text",
+      name="name",
+      value=category.name,
+      required
+    )
+    +inputField("Description")(
+      type="textarea",
+      name="description",
+      placeholder="Enter a description...",
+      value=category.description
+    )
 
     if errors
       each error in errors

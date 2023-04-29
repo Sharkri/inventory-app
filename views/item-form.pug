@@ -1,5 +1,7 @@
 extends layout
 
+include inputFieldMixin.pug
+
 block content
   script.
     let prevImg = "";
@@ -40,15 +42,13 @@ block content
     method="post",
     enctype="multipart/form-data"
   )
-    label.flex.flex-col.gap-2
-      strong Item Name
-      input.border-gray-400.shadow-sm.border-gray-300.rounded-md(
-        type="text",
-        name="name",
-        class="focus:ring-opacity-50 focus:ring-sky-200",
-        value=item.name,
-        required
-      )
+    +inputField("Item Name")(
+      type="text",
+      name="name",
+      value=item.name,
+      required
+    )
+
     div
       label.flex.flex-col.gap-2.items-center
         strong Item Image #[span.text-gray-400.text-sm.font-normal (optional)]
@@ -84,51 +84,43 @@ block content
 
         strong.text-sm Remove Image
 
-    label.flex.flex-col.gap-2
-      strong Description #[span.text-gray-400.text-sm.font-normal (optional)]
-      textarea.border-gray-400.shadow-sm.border-gray-300.rounded-md(
-        name="description",
-        placeholder="Enter a description...",
-        class="focus:ring-opacity-50 focus:ring-sky-200"
-      )= item.description
+    +inputField("Description")(
+      type="textarea",
+      name="description",
+      value=item.description,
+      placeholder="Enter a description..."
+    )
+    +inputField("Price")(
+      type="number",
+      name="price",
+      value=item.price ? item.price.amount : undefined,
+      placeholder="Enter price in USD",
+      min="0",
+      step="any",
+      required
+    )
+    +inputField("Number in stock")(
+      type="number",
+      name="numberInStock",
+      value=item.numberInStock,
+      min="0",
+      step="1",
+      onkeypress="return event.charCode >= 48 && event.charCode <= 57",
+      required
+    )
+
     label.flex.flex-col.gap-2
       strong Categories #[span.text-gray-400.text-sm.font-normal (optional, max 5)]
 
       p.text-gray-400.text-sm Desktop users: press #[code ctrl+click] to select multiple categories.
 
-      select.border-gray-400.shadow-sm.border-gray-300.rounded-md(
+      select.shadow-sm.border-gray-200.rounded-md(
         name="categories",
         class="focus:ring-opacity-50 focus:ring-sky-200",
         multiple
       )
         each category in categories 
           option(value=category._id, selected=category.selected)= category.name
-
-    label.flex.flex-col.gap-2
-      strong Price
-      input.border-gray-400.shadow-sm.border-gray-300.rounded-md(
-        type="number",
-        value=item.price ? item.price.amount : undefined,
-        name="price",
-        placeholder="Enter price in USD",
-        class="focus:ring-opacity-50 focus:ring-sky-200",
-        min="0",
-        step="any",
-        required
-      )
-
-    label.flex.flex-col.gap-2
-      strong Number in stock
-      input.border-gray-400.shadow-sm.border-gray-300.rounded-md(
-        type="number",
-        value=item.numberInStock,
-        name="numberInStock",
-        class="focus:ring-opacity-50 focus:ring-sky-200",
-        min="0",
-        step="1",
-        onkeypress="return event.charCode >= 48 && event.charCode <= 57",
-        required
-      )
 
     if errors
       each error in errors

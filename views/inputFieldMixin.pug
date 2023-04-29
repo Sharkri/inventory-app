@@ -1,0 +1,15 @@
+mixin inputField(labelText)
+  label.flex.flex-col.gap-2
+    strong #{ labelText }
+      if !attributes.required
+        = " "
+        span.text-gray-400.text-sm.font-normal (optional)
+
+    if attributes.type == 'textarea'
+      textarea.shadow-sm.border-gray-200.rounded-md(
+        class="focus:ring-opacity-50 focus:ring-sky-200"
+      )&attributes(attributes)= attributes.value
+    else
+      input.shadow-sm.border-gray-200.rounded-md(
+        class="focus:ring-opacity-50 focus:ring-sky-200"
+      )&attributes(attributes)
