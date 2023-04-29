@@ -12,7 +12,7 @@ block content
 
       if (clearPreview.checked) {
         prevImg = preview.src;
-        preview.src = "https://placehold.co/112x112";
+        preview.src = "https://placehold.co/96x96";
       } else {
         preview.src = prevImg;
       }
@@ -51,8 +51,8 @@ block content
       label.flex.flex-col.gap-2.items-center
         strong Item Image #[span.text-gray-400.text-sm.font-normal (optional)]
 
-        img.w-28.h-28(
-          src=item.imageUrl || "https://placehold.co/112x112",
+        img.w-24.h-24.object-cover(
+          src=item.imageUrl || "https://placehold.co/96x96",
           alt=""
         )
 
