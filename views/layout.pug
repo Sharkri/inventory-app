@@ -18,8 +18,10 @@ html(lang="en")
         document.documentElement.classList.remove("dark");
       }
 
-  body.bg-light(class="text-black/80 dark:text-white/80 dark:bg-dark")
-    header.sticky.top-0.px-6.py-3.flex.justify-between.gap-3.shadow-sm.font-bold.bg-neutral-50.border-b.border-b-slate-200(
+  body.bg-light.transition-colors.duration-300(
+    class="text-black/80 dark:text-white/80 dark:bg-dark"
+  )
+    header.sticky.top-0.px-6.py-3.flex.justify-between.flex-wrap.gap-3.shadow-sm.font-bold.bg-neutral-50.border-b.border-b-slate-200(
       class="dark:bg-dark dark:border-b-slate-600"
     )
       a(href="/")
@@ -28,10 +30,10 @@ html(lang="en")
       nav.flex.gap-3
         a(href="/inventory") Inventory
         a(href="/inventory/categories") Categories
-        .relative
-          button(type="button") Create #[i.fa.fa-chevron-down(aria-hidden="true")]
+        .relative.dropdown
+          button(type="button") Create
           ul.absolute.right-0.mt-2.shadow-lg.rounded.w-48.hidden.flex.flex-col.bg-neutral-50(
-            class="dark:bg-dark dark:shadow-white/10"
+            class="dark:bg-dark dark:shadow-white/5"
           )
             a.px-4.py-2.flex.items-center.gap-3(
               href="/inventory/item/create",
@@ -42,11 +44,67 @@ html(lang="en")
               href="/inventory/category/create",
               class="hover:bg-neutral-200 dark:hover:bg-white/10"
             ) #[i.fa.fa-plus.text-gray-500(aria-hidden="true")] Category
+
+        .border-l.border-l-slate-200(class="dark:border-l-neutral-700")
+
+        div
+          button.toggle-theme-button
+            i.fa.toggle-theme-icon.fa-lg.mr-3(
+              class="min-w-[16px]",
+              aria-label="toggle theme"
+            )
+
+          a(
+            href="https://github.com/Sharkri/inventory-app",
+            target="_blank",
+            rel="noreferrer"
+          ) #[i.fa.fa-github.fa-lg(aria-hidden="true")]
+
         script.
-          document.querySelector("button").addEventListener("click", () => {
-            const dropdown = document.querySelector("ul");
-            dropdown.classList.toggle("hidden");
-          });
+          const theme = {
+            dark: {
+              icon: "fa-moon-o",
+              color: "text-gray-400",
+            },
+
+            light: {
+              icon: "fa-sun-o",
+              color: "text-yellow-400",
+            },
+          };
+
+          const toggleThemeIcon = document.querySelector(".toggle-theme-icon");
+
+          function initialThemeLoad() {
+            const colorTheme = localStorage.getItem("color-theme");
+
+            toggleThemeIcon.classList.add(colorTheme === "dark" ? theme.dark.icon : theme.light.icon);
+            toggleThemeIcon.classList.add(colorTheme === "dark" ? theme.dark.color : theme.light.color);
+          }
+
+          initialThemeLoad();
+
+          function toggleTheme() {
+            const colorTheme = localStorage.getItem("color-theme");
+            localStorage.setItem("color-theme", colorTheme === "dark" ? "light" : "dark");
+            document.documentElement.classList.toggle("dark");
+
+            toggleThemeIcon.classList.toggle(theme.light.icon);
+            toggleThemeIcon.classList.toggle(theme.light.color);
+
+            toggleThemeIcon.classList.toggle(theme.dark.icon);
+            toggleThemeIcon.classList.toggle(theme.dark.color);
+          }
+
+          const toggleThemeBtn = document.querySelector(".toggle-theme-button");
+          toggleThemeBtn.addEventListener("click", toggleTheme);
+
+          document.querySelectorAll(".dropdown button").forEach((btn) =>
+            btn.addEventListener("click", () => {
+              const dropdown = btn.nextElementSibling;
+              dropdown.classList.toggle("hidden");
+            })
+          );
 
     .py-5.px-7.max-w-7xl.mx-auto
       block content
