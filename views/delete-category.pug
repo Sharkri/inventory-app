@@ -36,7 +36,10 @@ block content
           )
 
         .mt-6.flex.gap-2
-          a.bg-gray-200.font-bold.py-1.px-2.rounded-md(href=category.url) Cancel
+          a.bg-gray-200.font-bold.py-1.px-2.rounded-md(
+            class="dark:bg-dark-secondary",
+            href=category.url
+          ) Cancel
           button.bg-red-700.text-white.font-bold.py-1.px-2.rounded-md(
             type="submit"
           )= title
