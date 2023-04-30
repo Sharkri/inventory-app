@@ -9,6 +9,13 @@ exports.categoryPage = asyncHandler(async (req, res, next) => {
     Category.findById(req.params.id),
     Item.countDocuments({ categories: req.params.id }),
   ]);
+
+  if (category === null) {
+    const err = new Error("Category not found");
+    err.status = 404;
+    next(err);
+  }
+
   res.render("category-page", {
     title: "Category Page",
     category,

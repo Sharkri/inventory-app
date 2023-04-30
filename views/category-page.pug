@@ -1,13 +1,17 @@
 extends layout
 
 block content
-  h1.text-2xl.font-bold.mb-2= category.name
-  p.text-sm.text-gray-400= category.description
+  h1.text-2xl.font-bold.mb-1= category.name
+  p.text-gray-400.mb-3= category.description
 
-  p Item Count: #{ numItems }
-
-  a.font-bold.text-blue-400(href=category.itemsURL) See all items
+  p Total items: #[strong= numItems]
+  a.font-bold.text-blue-400.block.mt-1.mb-3(href=category.itemsURL) See items
 
   .flex.gap-2
-    a(href=category.url + "/update") Update Category
-    a(href=category.url + "/delete") Delete Category
+    a.bg-green-600.py-1.px-2.rounded-md.font-bold.text-white(
+      href=category.url + "/update"
+    ) Update Category
+
+    a.bg-red-700.py-1.px-2.rounded-md.font-bold.text-white(
+      href=category.url + "/delete"
+    ) Delete Category

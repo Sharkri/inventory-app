@@ -2,12 +2,13 @@ extends layout
 
 block content
   .flex.flex-col.justify-center.items-center
-    div
-      h1.text-xl.font-bold.mb-4= item.name
-      p.text-gray-400.text-sm.mb-2= item.description
+    .flex.flex-col.gap-3
+      h1.text-2xl.font-bold= item.name
+      p.text-gray-400.text-sm= item.description
       p.text-lg.text-green-400.font-bold= item.priceString
+
       if item.imageUrl
-        img.w-32.h-32(src=item.imageUrl, alt="")
+        img.w-full.max-h-64(src=item.imageUrl, alt="")
 
       p.text-sm
         if item.numberInStock === 0
@@ -16,11 +17,12 @@ block content
           span.text-gray-400 Inventory: #{ item.numberInStock }
 
       .flex.flex-wrap.gap-2
-        each category in item.categories 
+        each category in item.categories
           a.text-sm.bg-gray-200.py-1.px-2.rounded-full.truncate.block(
             class="dark:bg-dark-secondary",
             href=category.url
           ) #{ category.name }
+
       .mt-3
         a.mr-2.bg-green-600.py-1.px-2.rounded-md.font-bold.text-white(
           href=item.url + "/update"
