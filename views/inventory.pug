@@ -29,9 +29,7 @@ block content
     if items.length
       .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
         each item in items
-          .p-3.shadow-md.bg-slate-50.max-w-xs.flex.flex-col.gap-4(
-            class="dark:bg-dark-secondary shadow-white/10"
-          )
+          .p-3.shadow-md.max-w-xs.flex.flex-col.gap-4(class="dark:bg-dark-secondary")
             a.block.grow(href=item.url)
               if item.imageUrl
                 img.w-24.h-24.mb-5.mx-auto(
