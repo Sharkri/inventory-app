@@ -32,11 +32,12 @@ block content
           .p-3.shadow-md.max-w-xs.flex.flex-col.gap-4(class="dark:bg-dark-secondary")
             a.block.grow(href=item.url)
               if item.imageUrl
-                img.w-24.h-24.mb-5.mx-auto(
-                  src=item.imageUrl,
-                  class="dark:brightness-90",
-                  alt=""
-                )
+                .overflow-hidden
+                  img.w-28.h-28.object-contain.mb-5.mx-auto.transition-transform.duration-200(
+                    src=item.imageUrl,
+                    class="dark:brightness-90 hover:scale-125",
+                    alt=""
+                  )
               p.font-bold.text-lg.truncate(href=item.url)= item.name
               p.text-green-500.font-bold.my-2= item.priceString
               p.text-sm
