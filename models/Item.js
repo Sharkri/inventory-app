@@ -27,6 +27,26 @@ const ItemSchema = new Schema({
   },
 });
 
+ItemSchema.index(
+  {
+    name: "text",
+    description: "text",
+  },
+  {
+    weights: {
+      name: 10,
+      description: 5,
+    },
+  }
+);
+
+ItemSchema.statics.search = function search(query) {
+  return this.find({ $text: { $search: query } })
+    .select({ score: { $meta: "textScore" } })
+    .sort({ score: { $meta: "textScore" } })
+    .populate("categories");
+};
+
 ItemSchema.virtual("url").get(function getItemURL() {
   return `/inventory/item/${this._id}`;
 });

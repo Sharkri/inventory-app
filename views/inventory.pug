@@ -1,5 +1,7 @@
 extends layout
 
+include mixins/itemCardMixin.pug
+
 block content
   .flex.gap-6.mt-6.flex-wrap
     form.flex.flex-col(method="get", action="")
@@ -29,28 +31,6 @@ block content
     if items.length
       .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
         each item in items
-          .p-3.shadow-md.max-w-xs.flex.flex-col.gap-4(class="dark:bg-dark-secondary")
-            a.block.grow(href=item.url)
-              if item.imageUrl
-                .overflow-hidden
-                  img.w-28.h-28.object-contain.mb-5.mx-auto.transition-transform.duration-200(
-                    src=item.imageUrl,
-                    class="dark:brightness-90 hover:scale-125",
-                    alt=""
-                  )
-              p.font-bold.text-lg.truncate(href=item.url)= item.name
-              p.text-green-500.font-bold.my-2= item.priceString
-              p.text-sm
-                if item.numberInStock === 0
-                  span.text-red-600 Out of stock
-                else
-                  span.text-gray-400 Inventory: #{ item.numberInStock }
-
-            .flex.flex-wrap.gap-2
-              each category in item.categories 
-                a.text-xs.bg-gray-200.px-2.rounded-full.truncate.block.py-1(
-                  href=category.url,
-                  class="dark:bg-dark"
-                ) #{ category.name }
+          +itemCard(item)
     else
       p.grow.text-gray-500.grid.place-items-center No items found. #{ hasFilterApplied ? "Try clearing the filters." : "" }

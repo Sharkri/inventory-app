@@ -2,8 +2,24 @@ mixin header
   header.sticky.top-0.px-6.py-3.flex.justify-between.flex-wrap.gap-3.bg-neutral-50.border-b.border-b-slate-200(
     class="dark:bg-dark dark:border-b-slate-600"
   )
-    a(href="/")
-      i.fa.fa-home.fa-lg(aria-label="Homepage")
+    .flex.gap-2.items-center
+      a(href="/")
+        i.fa.fa-home.fa-lg(aria-label="Homepage")
+
+      form.flex.items-center(method="GET", action="/search")
+        label.sr-only(for="search") Search
+        .relative.w-full
+          input#search.pr-8.shadow-sm.border-gray-200.rounded-md.text-sm(
+            class="py-[3px] focus:ring-blue-500 focus:border-blue-500 dark:bg-dark-secondary dark:border-zinc-800",
+            type="search",
+            placeholder="Search inventory",
+            name="q",
+            required
+          )
+          button.absolute.inset-y-0.right-0.flex.items-center.pr-2(
+            aria-label="Search"
+          )
+            i.fa.fa-search.text-gray-500(class="dark:text-gray-400", aria-hidden="true")
 
     nav.flex.gap-3.flex-wrap
       a(href="/inventory") Inventory

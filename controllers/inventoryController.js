@@ -49,3 +49,19 @@ exports.inventoryPage = asyncHandler(async (req, res, next) => {
     hasFilterApplied: !!selectedCategories.length,
   });
 });
+
+exports.searchGET = asyncHandler(async (req, res, next) => {
+  const query = req.query.q;
+
+  if (!query) {
+    res.redirect("/");
+    return;
+  }
+
+  const items = await Item.search(query).exec();
+
+  res.render("search-page", {
+    title: `Showing results for "${query}"`,
+    items,
+  });
+});

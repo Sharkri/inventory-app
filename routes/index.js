@@ -13,6 +13,7 @@ const {
 const {
   inventoryPage,
   indexPage,
+  searchGET,
 } = require("../controllers/inventoryController");
 
 const {
@@ -30,6 +31,7 @@ const router = express.Router();
 // INVENTORY CONTROLLERS
 router.get("/", indexPage);
 router.get("/inventory", inventoryPage);
+router.get("/search", searchGET);
 
 // ITEM CONTROLLERS
 

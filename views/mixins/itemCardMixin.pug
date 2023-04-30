@@ -1,0 +1,24 @@
+mixin itemCard(item)
+  .p-3.shadow-md.max-w-xs.flex.flex-col.gap-4(class="dark:bg-dark-secondary")
+    a.block.grow.group(href=item.url)
+      if item.imageUrl
+        .overflow-hidden
+          img.w-28.h-28.object-contain.mb-5.mx-auto.transition-transform.duration-200(
+            src=item.imageUrl,
+            class="dark:brightness-90 group-hover:scale-125",
+            alt=""
+          )
+      p.font-bold.text-lg.truncate(href=item.url)= item.name
+      p.text-green-500.font-bold.my-2= item.priceString
+      p.text-sm
+        if item.numberInStock === 0
+          span.text-red-600 Out of stock
+        else
+          span.text-gray-400 Inventory: #{ item.numberInStock }
+
+    .flex.flex-wrap.gap-2
+      each category in item.categories 
+        a.text-xs.bg-gray-200.px-2.rounded-full.truncate.block.py-1(
+          href=category.url,
+          class="dark:bg-dark"
+        ) #{ category.name }

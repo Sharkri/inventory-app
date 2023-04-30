@@ -1,0 +1,12 @@
+extends layout
+
+include mixins/itemCardMixin.pug
+
+block content
+  h1.text-2xl.font-bold.truncate.mb-4= title
+  if items.length
+    .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(210px,1fr))]")
+      each item in items
+        +itemCard(item)
+  else
+    p.grow.text-gray-500.grid.place-items-center No items found. #{ hasFilterApplied ? "Try clearing the filters." : "" }
