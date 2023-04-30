@@ -77,7 +77,7 @@ block content
           accept="image/*",
           onchange="previewFile()"
         )
-        span.w-full.bg-gray-100.py-1.px-2.rounded-md.cursor-pointer.text-zinc-400.max-w-xs.flex.items-center.justify-center.gap-3(
+        span.w-full.bg-gray-100.py-1.px-2.rounded-md.cursor-pointer.text-zinc-400.max-w-xs.flex.flex-center.gap-3(
           class="peer-disabled:opacity-50 peer-disabled:cursor-not-allowed dark:bg-dark-secondary dark:text-zinc-300"
         )
           span(class="text-[19px]")
@@ -85,7 +85,7 @@ block content
 
           span.text-sm.font-bold Select an image
 
-      label#remove-image-checkbox.flex.gap-2.items-center.justify-center.mt-2(
+      label#remove-image-checkbox.flex.gap-2.flex-center.mt-2(
         style=item.imageUrl ? "visibility: visible;" : "visibility: hidden;"
       )
         input.rounded.border-gray-300.text-indigo-600.shadow-sm(

@@ -1,4 +1,5 @@
 const formsPlugin = require("@tailwindcss/forms");
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   darkMode: "class",
@@ -18,5 +19,16 @@ module.exports = {
       autoprefixer: {},
     },
     formsPlugin,
+    plugin(({ addVariant, addUtilities }) => {
+      addUtilities({
+        ".flex-center": {
+          "justify-content": "center",
+          "align-items": "center",
+        },
+      });
+
+      addVariant("child", "& > *");
+      addVariant("child-hover", "& > *:hover");
+    }),
   ],
 };

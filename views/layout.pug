@@ -21,11 +21,11 @@ html(lang="en")
   body.bg-light.transition-colors.duration-300(
     class="text-black/80 dark:text-white/80 dark:bg-dark"
   )
-    header.sticky.top-0.px-6.py-3.flex.justify-between.flex-wrap.gap-3.shadow-sm.font-bold.bg-neutral-50.border-b.border-b-slate-200(
+    header.sticky.top-0.px-6.py-3.flex.justify-between.flex-wrap.gap-3.bg-neutral-50.border-b.border-b-slate-200(
       class="dark:bg-dark dark:border-b-slate-600"
     )
       a(href="/")
-        i.fa.fa-home.fa-lg(aria-hidden="true")
+        i.fa.fa-home.fa-lg(aria-label="Homepage")
 
       nav.flex.gap-3.flex-wrap
         a(href="/inventory") Inventory
@@ -45,9 +45,7 @@ html(lang="en")
               class="hover:bg-neutral-200 dark:hover:bg-white/10"
             ) #[i.fa.fa-plus.text-gray-500(aria-hidden="true")] Category
 
-        .border-l.border-l-slate-200(class="dark:border-l-neutral-700")
-
-        div
+        .border-l.border-l-slate-200.pl-3(class="dark:border-l-neutral-700")
           button.toggle-theme-button
             i.fa.toggle-theme-icon.fa-lg.mr-3(
               class="min-w-[16px]",

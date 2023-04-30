@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  .flex.flex-col.justify-center.items-center
+  .flex.flex-col.flex-center
     .flex.flex-col.gap-3
       h1.text-2xl.font-bold= item.name
       p.text-gray-400.text-sm= item.description
@@ -23,8 +23,8 @@ block content
             href=category.url
           ) #{ category.name }
 
-      .mt-3
-        a.mr-2.bg-green-600.py-1.px-2.rounded-md.font-bold.text-white(
+      .mt-3.flex.gap-2.text-center
+        a.bg-green-600.py-1.px-2.rounded-md.font-bold.text-white(
           href=item.url + "/update"
         ) Update Item
 
