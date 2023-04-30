@@ -4,7 +4,7 @@ block content
   h1.text-2xl.font-bold.mb-7= title
   .grid.gap-5.grow(class="grid-cols-[repeat(auto-fill,minmax(190px,1fr))]")
     each category in categories 
-      a.p-3.shadow-md.bg-neutral-50.max-w-xs.flex.flex-col.gap-2.justify-between(
+      a.p-3.shadow-md.rounded-md.bg-neutral-50.max-w-xs.flex.flex-col.gap-2.justify-between(
         href=category.url,
         class="dark:bg-dark-secondary"
       )
