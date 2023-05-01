@@ -3,42 +3,6 @@ extends layout
 include mixins/inputFieldMixin.pug
 
 block content
-  script.
-    let prevImg = "";
-
-    function clearPreview() {
-      const clearPreview = document.querySelector('input[type="checkbox"]');
-      const preview = document.querySelector("img");
-      const imageInput = document.querySelector('input[type="file"]');
-
-      imageInput.disabled = clearPreview.checked;
-
-      if (clearPreview.checked) {
-        prevImg = preview.src;
-        preview.src = "https://placehold.co/112x112";
-      } else {
-        preview.src = prevImg;
-      }
-    }
-
-    function previewFile() {
-      const preview = document.querySelector("img");
-      const removeImageCheckbox = document.getElementById("remove-image-checkbox");
-      const file = document.querySelector('input[type="file"]').files[0];
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        preview.src = reader.result;
-      };
-
-      if (file) {
-        removeImageCheckbox.style.visibility = "visible";
-        reader.readAsDataURL(file);
-      } else {
-        preview.src = "https://placehold.co/112x112";
-        removeImageCheckbox.style.visibility = "hidden";
-      }
-    }
-
   h1.text-xl.font-bold.mb-5= title
 
   form.flex.flex-col.gap-6.max-w-sm(
@@ -71,11 +35,10 @@ block content
           alt=""
         )
 
-        input.text-sm.hidden.peer(
+        input#image-input.text-sm.hidden.peer(
           type="file",
           name="image",
-          accept="image/*",
-          onchange="previewFile()"
+          accept="image/*"
         )
         span.w-full.bg-gray-100.py-1.px-2.rounded-md.cursor-pointer.text-zinc-400.max-w-xs.flex.flex-center.gap-3(
           class="peer-disabled:opacity-50 peer-disabled:cursor-not-allowed dark:bg-dark-secondary dark:text-zinc-300"
@@ -88,10 +51,9 @@ block content
       label#remove-image-checkbox.flex.gap-2.flex-center.mt-2(
         style=item.imageUrl ? "visibility: visible;" : "visibility: hidden;"
       )
-        input.rounded.border-gray-300.text-indigo-600.shadow-sm(
+        input#clear-preview-checkbox.rounded.border-gray-300.text-indigo-600.shadow-sm(
           type="checkbox",
           name="clear-image",
-          onchange="clearPreview()",
           class="focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
         )
 
@@ -140,3 +102,42 @@ block content
         p.text-red-500.text-sm= error.msg
 
     button.p-3.bg-blue-500.font-bold.rounded-md(class="text-white/90", type="submit")= title
+    script.
+      let prevImg = "";
+
+      const clearPreviewCheckbox = document.getElementById("clear-preview-checkbox");
+      const imageInput = document.getElementById("image-input");
+
+      function toggleClearPreview() {
+        const preview = document.querySelector("img");
+
+        imageInput.disabled = clearPreviewCheckbox.checked;
+
+        if (clearPreviewCheckbox.checked) {
+          prevImg = preview.src;
+          preview.src = "https://placehold.co/112x112";
+        } else {
+          preview.src = prevImg;
+        }
+      }
+
+      function previewFile() {
+        const preview = document.querySelector("img");
+        const removeImageCheckbox = document.getElementById("remove-image-checkbox");
+        const file = document.querySelector('input[type="file"]').files[0];
+        const reader = new FileReader();
+        reader.onloadend = function () {
+          preview.src = reader.result;
+        };
+
+        if (file) {
+          removeImageCheckbox.style.visibility = "visible";
+          reader.readAsDataURL(file);
+        } else {
+          preview.src = "https://placehold.co/112x112";
+          removeImageCheckbox.style.visibility = "hidden";
+        }
+      }
+
+      clearPreviewCheckbox.addEventListener("change", toggleClearPreview);
+      imageInput.addEventListener("change", previewFile);

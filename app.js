@@ -37,6 +37,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       "script-src": ["'self'", "'unsafe-inline'"],
+      "img-src": ["'self'", "data:", "https://placehold.co/112x112"],
     },
   })
 );
