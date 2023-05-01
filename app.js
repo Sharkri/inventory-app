@@ -6,6 +6,14 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const compression = require("compression");
+const helmet = require("helmet");
+const RateLimit = require("express-rate-limit");
+
+const limiter = RateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 50,
+});
 
 const indexRouter = require("./routes/index");
 
@@ -25,6 +33,15 @@ main().catch((err) => console.error(err));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "'unsafe-inline'"],
+    },
+  })
+);
+app.use(limiter);
+app.use(compression()); // Compress all routes
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
