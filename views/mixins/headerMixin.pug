@@ -1,5 +1,5 @@
 mixin header
-  header.sticky.top-0.px-6.py-3.flex.justify-between.flex-wrap.gap-3.bg-neutral-50.border-b.border-b-slate-200(
+  header.z-10.sticky.top-0.px-6.py-3.flex.justify-between.flex-wrap.gap-3.bg-neutral-50.border-b.border-b-slate-200(
     class="dark:bg-dark dark:border-b-slate-600"
   )
     .flex.gap-2.items-center
@@ -31,12 +31,12 @@ mixin header
         )
           a.px-4.py-2.flex.items-center.gap-3(
             href="/inventory/item/create",
-            class="hover:bg-neutral-200 dark:hover:bg-white/10"
+            class="hover:bg-neutral-200 dark:hover:bg-white/10 dark:bg-dark"
           ) #[i.fa.fa-plus.text-gray-500(aria-hidden="true")] Item
 
           a.px-4.py-2.flex.items-center.gap-3(
             href="/inventory/category/create",
-            class="hover:bg-neutral-200 dark:hover:bg-white/10"
+            class="hover:bg-neutral-200 dark:hover:bg-white/10 dark:bg-dark"
           ) #[i.fa.fa-plus.text-gray-500(aria-hidden="true")] Category
 
       .border-l.border-l-slate-200.pl-3(class="dark:border-l-neutral-700")
