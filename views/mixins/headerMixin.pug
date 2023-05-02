@@ -68,10 +68,9 @@ mixin header
         const toggleThemeIcon = document.querySelector(".toggle-theme-icon");
 
         function initialThemeLoad() {
-          const colorTheme = localStorage.getItem("color-theme");
-
-          toggleThemeIcon.classList.add(colorTheme === "dark" ? theme.dark.icon : theme.light.icon);
-          toggleThemeIcon.classList.add(colorTheme === "dark" ? theme.dark.color : theme.light.color);
+          const { icon, color } = document.documentElement.classList.contains("dark") ? theme.dark : theme.light;
+          toggleThemeIcon.classList.add(icon);
+          toggleThemeIcon.classList.add(color);
         }
 
         initialThemeLoad();
